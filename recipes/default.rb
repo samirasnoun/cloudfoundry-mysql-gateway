@@ -23,6 +23,9 @@ if Chef::Config[:solo]
    Chef::Log.warn("This recipe uses search. Chef Solo does not support search.")
 else 
 
+node.set['cloudfoundry_common']['cf_session']['cf_id'] = node['cloudfoundry_mysql_service']['cf_session']['cf_id']
+
+include_recipe 'cloudfoundry-common'
   cf_id_node = node['cloudfoundry_mysql_service']['cf_session']['cf_id']
   m_nodes = search(:node, "role:cloudfoundry_controller AND cf_id:#{cf_id_node}")
 
